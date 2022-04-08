@@ -61,6 +61,7 @@ def receiveFromRabbitMq():
     connection = pika.BlockingConnection(connectionBuild)
     channel = connection.channel()
 
+    # mq消费者的回调函数，当指定的队列有消息时，获取消息，然后消费消息
     def callback(ch, method, properties, body):
         shop = body
         # 得到返回值
@@ -82,7 +83,7 @@ def receiveFromRabbitMq():
                           auto_ack=True,
                           on_message_callback=callback)
 
-    # channel.start_consuming()
+    channel.start_consuming()
 
 
 if __name__ == '__main__':
